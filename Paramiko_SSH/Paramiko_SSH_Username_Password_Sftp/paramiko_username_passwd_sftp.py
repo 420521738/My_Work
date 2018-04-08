@@ -15,3 +15,5 @@ t.connect(username=user,password=password)	###建立一个传输连接
 sftp = paramiko.SFTPClient.from_transport(t)	###创建一个sftp实例，从t实例获取
 sftp.get('/home/ihavecar/1.txt','1.new.txt')	###将远程服务器的/home/ihavecar/1.txt下载到当前路径，并重命名文件为1.new.txt
 sftp.put('1.new.txt','/tmp/1.txt')		###将当前路径下的1.new.txt上传到远程服务器的/tmp/下，并重命名为1.txt
+
+t.close()
