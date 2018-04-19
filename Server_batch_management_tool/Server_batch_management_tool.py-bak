@@ -1,0 +1,166 @@
+#!/usr/bin/env python
+# --*-- coding: utf-8 --*--
+
+import MySQLdb,os,paramiko,sys,time,getpass
+from multiprocessing import Process,Pool
+
+### 数据库类 ###
+class Connect_mysql:
+	conn = MySQLdb.connect(host = 'localhost',user = 'root',passwd = '123456',port = 3306,db = 'manager_system')
+	cur = conn.cursor()	###创建游标
+	
+	def __init__(self,username,password='NULL'):
+		self.username = username
+		self.password = password
+
+	def login_check(self):
+		try:
+			self.cur.execute("select * from users where username = '%s' and password = '%s'" % (self.username,self.password))
+			qur_result = self.cur.fetchall()
+			if qur_result == ():
+				return 0
+			else:
+				return 1
+			self.cur.close()
+			self.conn.close()
+		except MySQLdb.Error,e:
+			print '\033[31;1mMySQL Error Msg:%s\033[0m' % e
+
+	def return_server(self):
+		self.cur.execute("select * from %s_server" % self.username)
+		qur_result = self.cur.fetchall()
+		return qur_result
+
+### 批量远程命令执行函数 ###
+def ssh_run(host_info,cmd,sysname):
+	ip,username,password,port = host_info[1],host_info[2],host_info[3],host_info[4]
+	date = time.strftime('%Y_%m_%d')
+	date_detial = time.strftime('%Y_%m_%d %H:%M:%S')
+	f = file('./log/%s_%s_record.log' % (sysname,date),'a+')
+	
+	try:
+		s.connect(ip,int(port),username,password,timeout=5)
+		stdin,stdout,stderr = s.exec_command(cmd)
+		cmd_result = stdout.read(),stderr.read()	
+		print '\033[32;1m--------------%s--------------\033[0m' % ip
+
+		for line in cmd_result:
+			print line
+	except:
+		log = "Time:%s | Type:%s | Detial:%s | Server:%s | Result:%s\n" % (date_detial,'cmd_batch',cmd,ip,'failed')
+		f.write(log)
+		f.close()
+		print '\033[31;1mSomething is wrong of %s\033[0m' % ip
+	else:
+		log = "Time:%s | Type:%s | Detial:%s | Server:%s | Result:%s\n" % (date_detial,'cmd_batch',cmd,ip,'success')
+                f.write(log)
+                f.close()
+		return 1
+
+### 批量文件分发函数 ###
+def distribute_file(host_info,file_name,sysname):
+        ip,username,password,port = host_info[1],host_info[2],host_info[3],host_info[4]
+        date = time.strftime('%Y_%m_%d')
+        date_detial = time.strftime('%Y_%m_%d %H:%M:%S')
+        f = file('./log/%s_%s_record.log' % (sysname,date),'a+')
+	try:
+		t = paramiko.Transport((ip,port))
+		t.connect(username = username,password = password)
+		sftp = paramiko.SFTPClient.from_transport(t)
+		sftp.put(file_name,'/tmp/%s' % file_name)
+		t.close()
+	except:
+		log = "Time:%s | Type:%s | Detial:%s | Server:%s | Result:%s\n" % (date_detial,'distribute_file',file_name,ip,'failed')
+                f.write(log)
+                f.close()
+                print '\033[31;1mSomething is wrong of %s\033[0m' % ip
+	else:
+                log = "Time:%s | Type:%s | Detial:%s | Server:%s | Result:%s\n" % (date_detial,'distribute_file',file_name,ip,'success')
+                f.write(log)
+                f.close()
+                print '\033[31;1mDistribute %s to %s Successfully!\033[0m' % (file_name,ip)
+
+
+os.system('clear')
+print '\033[32;1mWelcome to server batch management system!\033[0m'
+
+### 程序主程序 ###
+while True:
+	username = raw_input("Please input your username:").strip()
+	password = getpass.getpass("Please input your password:").strip()
+	if len(username) <= 3 or len(password) < 6:
+		print '\033[31;1mInvalid username or password,please try again later!\033[0m'
+		continue
+	p = Connect_mysql(username,password)
+	mark = p.login_check()
+	if mark == 0:
+		print '\033[31;1mUsername or password wrong, Please try again later!\033[0m'
+	elif mark == 1:
+		print '\033[32;1mLogin Success!\033[0m'
+		print 'The server you can manager are as follow:'
+		p = Connect_mysql(username)
+		server_list = p.return_server()
+		for server in server_list:
+			print '%s:%s' % (server[5],server[1])
+		while True:
+			print '''
+		1.Execute the command batch
+		2.Distribute files batch
+		3.Exit system
+		'''
+			choice = raw_input('\033[32;1mPlease input your choice number:\033[0m').strip()
+			choice = int(choice)
+			if choice >= 1 and choice <= 3:
+				pass
+			else:
+				continue
+
+			### 批量执行命令 ###
+			if choice == 1:
+				s = paramiko.SSHClient()
+				s.load_system_host_keys()
+				s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+				
+				p = Pool(processes=3)
+				result_list = []
+
+				while True:
+					cmd = raw_input('\033[32;1mPlease enter the command,also you can enter quit to go back the system:\033[0m')
+					if cmd == 'quit':break
+					for h in server_list:
+						result_list.append(p.apply_async(ssh_run,[h,cmd,username]))
+					for res in result_list:
+						res.get()
+				s.close()
+			
+			### 批量分发文件 ###
+			elif choice == 2:
+                                s = paramiko.SSHClient()
+                                s.load_system_host_keys()
+                                s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+                                p = Pool(processes=3)
+                                result_list = []
+				
+				while True:
+					file_name = raw_input('\033[32;1mPlease input the filename which you want to distribute,also you can enter quit to go back the system:\033[0m').strip()
+					start = time.time()
+					if file_name == 'quit':
+						break
+					file_check = os.path.isfile(file_name)
+					log_list = []
+					if file_check == False:
+						print '\033[31;1mThe file:%s does not exist or it is a directory!\033[0m'
+						continue
+					else:
+						for h in server_list:
+							result_list.append(p.apply_async(distribute_file,[h,file_name,username]))
+						for res in result_list:
+							res.get()
+						end = time.time()
+						print '\033[32;1mThe file has been distributed to the server which you manage!\nCost time:%s seconds\033[0m' % str(end - start)
+				s.close()
+				
+			### 退出系统 ###
+			elif choice == 3:
+				sys.exit('\033[32;1mWelcome to use our system,welcome to the next time!\033[0m')	
