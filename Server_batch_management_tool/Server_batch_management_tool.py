@@ -65,8 +65,6 @@ def distribute_file(host_info,file_name,sysname):
         f = file('./log/%s_%s_record.log' % (sysname,date),'a+')
 	try:
 		t = paramiko.Transport((ip,port))
-		t.load_system_host_keys()
-		t.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 		t.connect(username = username,password = password)
 		sftp = paramiko.SFTPClient.from_transport(t)
 		sftp.put(file_name,'/tmp/%s' % file_name)
@@ -136,9 +134,9 @@ while True:
 			
 			### 批量分发文件 ###
 			elif choice == 2:
-				#t = paramiko.Transport((ip,port))
-                                #t.load_system_host_keys()
-                                #t.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                                s = paramiko.SSHClient()
+                                s.load_system_host_keys()
+                                s.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
                                 p = Pool(processes=3)
                                 result_list = []
@@ -163,4 +161,4 @@ while True:
 				
 			### 退出系统 ###
 			elif choice == 3:
-				sys.exit('\033[32;1mWelcome to use our system,welcome to the next time!\033[0m')	
+				sys.exit('\033[32;1mWelcome to use our system,welcome to the next time!\033[0m')
