@@ -4,7 +4,7 @@
 import os,sys
 
 #BASE_DIR = os.path.dirname(os.path.dirname(__file__))	###当前程序执行的绝对路径
-BASE_DIR = '/root/py_training/day7/monitor/m_server/'
+BASE_DIR = '/root/py_training/day8/monitor/m_server/'
 sys.path.append(BASE_DIR)
 
 #### 以下为调试代码 ###

@@ -2,13 +2,11 @@
 # --*-- coding: utf-8 --*--
 
 import templates
-import copy 
+
 
 ###for host qiufei_host1
 ### 首先调用templates的LinuxGeneralServices类,LinuxGeneralServices类中调用了linux的cpu,memory,load类,cpu,memory,load类调用了generic中的DefaultService基类
 h1 = templates.LinuxGeneralServices()		###主机实例化
-h1.services = copy.deepcopy(h1.services)	###进行深copy，避免各个实例之间的互相影响，比如增删改等操作
-h1.services['cpu'].triggers = copy.deepcopy(h1.services['cpu'].triggers)
 h1.hostname = 'qiufei_server1'
 h1.ip_address = '192.168.1.71'
 h1.port = 22612
@@ -19,8 +17,6 @@ h1.services['cpu'].triggers['steal'] = [int,70,75]
 
 ###for host qiufei_host2
 h2 = templates.LinuxGeneralServices()   ###主机实例化
-h2.services = copy.deepcopy(h2.services)
-h2.services['cpu'].triggers = copy.deepcopy(h2.services['cpu'].triggers)
 h2.hostname = 'qiufei_server2'
 h2.ip_address = '192.168.1.74'
 h2.port = 22612
@@ -30,8 +26,6 @@ h2.services['load'].interval = 30
 
 ###for host qiufei_host3
 h3 = templates.LinuxGeneralServices()   ###主机实例化
-h3.services = copy.deepcopy(h3.services)
-h3.services['cpu'].triggers = copy.deepcopy(h3.services['cpu'].triggers)
 h3.hostname = 'qiufei_server3'
 h3.ip_address = '192.168.1.19'
 h3.port = 22
@@ -47,11 +41,15 @@ monitored_hosts = [h1,h2,h3]	### 定义列表monitored_hosts为主机列表
 #print '************* h1 services:\n\n',h1.services
 #print '************* h2 services:\n\n',h2.services
 #print '************* h3 services:\n\n',h3.services
-
+#
 #print '************* h1 cpu triggers:\n\n',h1.services['cpu'].triggers['iowait']
 #print '************* h2 cpu triggers:\n\n',h2.services['cpu'].triggers['iowait']
 #print '************* h3 cpu triggers:\n\n',h3.services['cpu'].triggers['iowait']
-
+#
+#print '************* h1 cpu triggers:\n\n',h1.services['cpu'].triggers['steal']
+#print '************* h2 cpu triggers:\n\n',h2.services['cpu'].triggers['steal']
+#print '************* h3 cpu triggers:\n\n',h3.services['cpu'].triggers['steal']
+#
 #print '************* h1 interval:\n\n',h1.services['load'].interval
 #print '************* h2 interval:\n\n',h2.services['load'].interval
 #print '************* h3 interval:\n\n',h3.services['load'].interval

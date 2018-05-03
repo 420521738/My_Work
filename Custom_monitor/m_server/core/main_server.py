@@ -5,6 +5,7 @@ import global_setting		### 导入环境变量模块，设定当前家目录为/r
 from conf import hosts		### 导入当前代码家目录下的conf下的hosts模块
 import redis_connector as redis	### 导入redis连接模块
 import json			### 导入json模块,后续收消息需要使用json格式
+import time
 
 
 def push_configure_data_to_redis():	### 定义将客户端配置推送到redis的模块
@@ -12,7 +13,7 @@ def push_configure_data_to_redis():	### 定义将客户端配置推送到redis�
 		config_dic = {}
 		for k,v in h.services.items():	### h.services.items在hosts模块除模块大部分内容外，已经被自定义了
 			config_dic[k] = [v.interval,v.plugin_name,0]	### 0代表第一次的时间戳
-		print config_dic	### config_dic是每台客户端的自定义后的监控间隔、插件名、时间戳的字典
+		#print config_dic	### config_dic是每台客户端的自定义后的监控间隔、插件名、时间戳的字典
 
 		redis.r['configuration::%s' %h.hostname] = json.dumps(config_dic) ### 将configuration::主机名这样格式key值，与其对应的config_dic字典json化后存入redis
 
@@ -29,6 +30,15 @@ count = 0
 
 while True:
 	data = msg_queue.parse_response()	###持续监听客户端发过来的消息
-	print 'round %s ::' % count,json.loads(data[2])
-	count +=1
+	#print data
+	print 'round %s ::' % count
+	client_data = json.loads(data[2])
+	client_data['recv_time'] = time.time()
+	redis_key = '%s::%s' % (client_data['hostname'],client_data['service_name'])
+	### dump client service data into redis
+	redis.r[redis_key] = json.dumps(client_data)
 
+	for k,v in client_data.items():
+		print k, '------>',v
+
+	count +=1

@@ -10,7 +10,7 @@ def monitor(frist_invoke=1):
     else:
 	value_dic = {}
         user,nice,system,iowait,steal,idle = result.split()[2:]
-        value_dic['data_value'] = {
+        value_dic = {
             'user': user,
             'nice': nice,
             'system': system,
