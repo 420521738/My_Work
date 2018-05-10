@@ -1,0 +1,33 @@
+﻿
+body{
+	margin:0px auto;
+}
+
+.pg-header{
+	background-color: #ebf1f3 ;
+	height:70px;
+	position:fixed;
+	top:0px;
+	width:100%;
+}
+
+.pg-header .logo{
+	font-size:30px;
+	line-height:50px;
+	margin-left:100px;
+	margin-top:10px;
+	font-family:fantasy;
+	color:balack;
+}
+
+.pg-body{
+	background-color:#EBE9E9;
+	min-height:1000px;
+	margin-top:70px;
+}
+
+.pg-body p{
+	font-size:20px;
+	font-family:fantasy;
+	margin-left:130px;
+}
