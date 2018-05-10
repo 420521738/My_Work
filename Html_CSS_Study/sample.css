@@ -1,0 +1,50 @@
+﻿/* 外边距等于0，加上这个，就可以使body里面的内容在页面上没有间隙，必须写到body中才能生效，否则不生效 */
+body{
+	margin:0px auto;
+}
+/* 头部的div，使用的style样式名字叫做pg-header */
+.pg-header{
+	background-color:red;
+	height:50px;
+	position:fixed;
+	top:0px;
+	width:100%;
+}
+/* 头部的div中logo的样式，.pg-header .logo中间一定要有空格，否则样式无效 */
+.pg-header .logo{
+	font-size:30px;
+	line-height:50px;
+	margin-left:20px;
+	font-family:fantasy;
+	color:white;
+}
+/* 颜色可以根据颜色选择器来查找，网址可以是：https://htmlcolorcodes.com/zh/yanse-xuanze-qi/ */
+/* min-height是设置页面的最小高度  */
+.pg-body{
+	background-color:#EBE9E9;
+	min-height:500px;
+}
+
+.pg-body .menu{
+	width:220px;
+	background-color:#985454;
+	position:fixed;
+	top:60px;
+	bottom:50px;
+	overflow:auto;
+}
+
+.pg-body .menu ul{
+	margin:0px;
+}
+
+.pg-body .menu ul li{
+	padding:5px;
+}
+
+.pg-body .content{
+	margin-left:240px;
+	margin-top:60px;
+}
+
+
