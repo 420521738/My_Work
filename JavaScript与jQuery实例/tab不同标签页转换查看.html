@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<title>tab不同标签页转换查看</title>
+		<link href='common.css' rel='stylesheet' />
+	</head>
+
+	<body>
+		<div class='container'>
+			<div class='tab-menu-box1'>
+				<div class='menu'>
+					<ul id='tab-menu-title'>
+						<li class='current' content-to='1'>员工个人信息</li>
+						<li content-to='2'>员工职位信息</li>
+						<li content-to='3'>员工薪资信息</li>
+					</ul>					
+				</div>
+				<div id='tab-menu-body' class='content'>
+					<div content='1'>
+					姓名：张三<br/>
+					性别：男<br/>
+					年龄：28<br/>
+					住址：广东省广州市天河区五山路248号
+					</div>
+					<div content='2' class='hide'>
+					职位：运维工程师<br/>
+					职位职责：<br/>
+					    事件管理：目标是在服务出现异常时尽可能快速的恢复服务，从而保障服务的可用性；同时深入分析故障产生的原因，推动并修复服务存在的问题，同时设计并开发相关的预案以确保服务出现故障时可以高效的止损。<br/>
+						问题发现：设计并开发高效的监控平台和告警平台，使用机器学习、大数据分析等方法对系统中的大量监控数据进行汇总分析，以期在系统出现异常的时候可以快速的发现问题和判断故障的影响。<br/>
+						问题处理：设计并开发高效的问题处理平台和工具，在系统出现异常的时候可以快速/自动决策并触发相关止损预案，快速恢复服务。<br/>
+						问题跟踪：通过分析问题发生时系统的各种表现(日志、变更、监控)确定问题发生的根本原因，制定并开发预案工具。<br/>
+						变更管理：以可控的方式，尽可能高效的完成产品功能的迭代的变更工作。<br/>
+						配置管理：通过配置管理平台(自研、开源)管理服务涉及到的多个模块、多个版本的关系以及配置的准确性。<br/>
+						发布管理：通过构建自动化的平台确保每一次版本变更可以安全可控地发布到生产环境。<br/>
+						容量管理：在服务运行维护阶段，为了确保服务架构部署的合理性同时掌握服务整体的冗余，需要不断评估系统的承载能力，并不断优化之。<br/>
+						容量评估：通过技术手段模拟实际的用户请求，测试整个系统所能承担的最大吞吐；通过建立容量评估模型分析压力测试过程中的数据以评估整个服务的容量。<br/>
+						容量优化：基于容量评估数据，判断系统的瓶颈并提供容量优化的解决方案。比如通过调整系统参数、优化服务部署架构等方法来高效的提升系统容量。<br/>
+						架构优化：为了支持产品的不断迭代，需要不断的进行架构优化调整。以确保整个产品能够在功能不断丰富和复杂的条件下，同时保持高可用性。<br/>
+					</div>
+					<div content='3' class='hide'>
+					目前薪资：20000人民币<br/>
+					</div>
+				</div>				
+			</div>
+		</div>
+		
+		<script type="text/javascript" src='jquery-1.8.2.js'></script>
+		<script type="text/javascript">
+		$(function(){
+			ChangeTab('#tab-menu-title','#tab-menu-body');
+		})
+		function ChangeTab(title,body){
+			$(title).children().bind('click',function(){
+				$menu = $(this);
+				$content = $(body).find('div[content="' + $(this).attr("content-to") + '"]');
+				$menu.addClass('current').siblings().removeClass('current');
+				$content.removeClass('hide').siblings().addClass('hide');
+			})
+		}
+		</script>
+	</body>
+</html>

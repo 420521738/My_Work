@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<title>左侧菜单栏点击自动展开关闭其他菜单栏</title>
+		<link href='commonall.css' rel='stylesheet' />
+		<script type="text/javascript" src='jquery-1.8.2.js'></script>
+		<script type="text/javascript"></script>
+	</head>
+
+	<body>
+		<div class='container'>
+			<div>
+				<div class='title'>初识与安装python</div>
+				<div class='body'>
+					<a href="">python版本选择</a>
+					<a href="">python起源</a>
+					<a href="">python的用途</a>
+				</div>
+			</div>
+			
+			<div>
+				<div class='title'>python基础</div>
+				<div class='body hide'>
+					<a href="">数据类型和变量</a>
+					<a href="">字符串和编码</a>
+					<a href="">使用list和dict</a>
+					<a href="">条件判断和循环</a>
+				</div>
+			</div>
+			
+			<div>
+				<div class='title'>函数</div>
+				<div class='body hide'>
+					<a href="">调用函数</a>
+					<a href="">定义函数</a>
+					<a href="">函数的参数</a>
+					<a href="">递归函数</a>
+				</div>
+			</div>
+
+			<div>
+				<div class='title'>高级特性</div>
+				<div class='body hide'>
+					<a href="">切片</a>
+					<a href="">迭代</a>
+					<a href="">列表生成器</a>
+				</div>
+			</div>
+			
+		</div>
+		
+		<script type="text/javascript">
+			$(function(){
+				$('.title').click(function(){
+					$(this).parent().siblings().children('.body').addClass('hide');
+					$(this).next().removeClass('hide');
+				})
+			})
+		</script>
+		
+		
+	</body>
+</html>
