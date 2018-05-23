@@ -1,0 +1,27 @@
+.hide{
+	display: none;
+}
+
+.container{
+	width:300px;
+	height: 600px;
+	background-color: #ddd;
+	border: 1px solid #999;
+}
+
+.container .title{
+	height: 38px;
+	font-size: 28px;
+	line-height: 38px;
+	background-color: blue;
+	cursor: pointer;
+}
+
+.container .body{
+	background-color:white;
+}
+
+.container .body a{
+	display:block;
+	padding: 10px;
+}

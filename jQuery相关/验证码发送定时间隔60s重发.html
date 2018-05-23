@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset='utf-8' />
+		<title>验证码发送定时间隔60秒重发</title>
+		<script type="text/javascript" src='jquery-1.8.2.js'></script>
+		<script type="text/javascript"></script>
+	</head>
+
+	<body>
+		<button id='code' onclick='getCode()'>获取短信验证码</button>
+		<script>
+			//定义总体的函数getCode,让button按钮点击之后，设置属性为disabled不可点击
+			//接着使用定时器触发函数countdown，每次1000毫秒
+			var i;
+			function getCode(){
+				$('#code').attr({'disabled':'disabled'});
+				i = self.setInterval('countdown()',1000);
+			}
+			//定义间隔时间为60
+			//每次获取当前剩余时间+秒后重新发送的字样
+			//当满60秒钟后，使button移除disabled不可点击的属性,并重置计数器
+			var count = 60;
+			function countdown(){
+				document.getElementById('code').innerHTML = count + '秒后重新发送';
+				count--;
+				if(count<0){
+					i = window.clearInterval(i)
+					count = 60
+					$('#code').removeAttr('disabled').html('重新获取短信验证码')
+				}
+			}
+		</script>
+	</body>
+</html>
