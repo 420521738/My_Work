@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+	<title>世界，你好</title>
+</head>
+
+<!--
+	定义三个label，每个label分别代表省、市、县（区）
+-->
+<body>
+<!--
+	for属性规定 label 与哪个表单元素绑定。
+	如何引用一个下拉列表框的选项,即option对象,现在介绍option对象的两个重要属性,value和text.
+	value属性表示标记中value所指定的值,可以通过脚本获取或设置这个值,text属性表示显示于界面中的文本,即和之间的部分.
+	其中设置value=-1的原因是由于获取省、市、县的时候返回值是一个键值对，key是从0开始自增的，设置value为-1可以不与接下来的值冲突
+-->
+	<label for='province'>Province:</label>
+	<select id='province'>
+		<option value='-1'>choice</option>
+	</select>
+	</br></br>
+	
+	<label for='city'>City:</label>
+	<select id='city'>
+		<option value='-1'>choice</option>
+	</select>
+	</br></br>
+	
+	<label for='county'>County:</label>
+	<select id='county'>
+		<option value='-1'>choice</option>
+	</select>
+	</br></br>
+	
+	<script type="text/javascript" src='/static/jquery-1.8.2.js'></script>
+	<script type="text/javascript">
+		//自动执行的函数$(function)
+		$(function(){
+			//初始化函数Init()
+			Init();
+			//下拉选择框改变触发函数
+			$('#province').change(function(){
+				//val属性是返回第一个匹配元素的 value 属性的值。也就是select下拉菜单中对应标签的value的值
+				provinceid = $('#province option:selected').val();
+				//provinceid = $(this).find(option:selected').val();
+				//provinceid = $('#province).find(option:selected').val();
+				//alert(provinceid)
+				//因为是三级联动，所以在改变省的时候，需要对市和县的标签内容进行清空
+				$('#city :gt(0)').remove();
+				$('#county :gt(0)').remove();
+				Request('/getcity/',BindCity,{Id:provinceid});
+			})
+			
+			//下拉选择框改变触发函数
+			$('#city').change(function(){
+				provinceid = $('#province option:selected').val();
+				cityid = $('#city option:selected').val();
+				//cityid = $(this).find(option:selected').val();
+				//cityid = $('#city).find(option:selected').val();
+				//alert(cityid);
+				//因为是三级联动，所以在改变市的时候，需要对县的标签内容进行清空
+				$('#county :gt(0)').remove();
+				Request('/getcounty/',BindCounty,{proId:provinceid,cityId:cityid});
+			})
+			
+		})
+		
+		//第一次刷新访问房爷，默认加载省列表,调用Request函数，Request函数中调用BindProvince函数对数据进行返回给后端
+		function Init(){
+			Request('/getprovince/',BindProvince,null)
+		}
+		
+		//ajax普通请求（非跨域）的标准写法
+		function Request(url,func,data){
+			$.ajax({
+			type:'GET',
+			data:data,
+			url:url,
+			cache:false,
+			async:true,
+			success:func
+				});
+		}
+		
+		function BindProvince(data){
+			//console.log(data)
+			//对从后端传来的数据进行反序列化才能用
+			data = $.parseJSON(data)
+			//each是循环函数，对象是data，触发的函数是function（i）
+			$.each(data,function(i){
+				//console.log(i)
+				//对省里面的下拉标签进行拼接，字符串需要用双引号引起来，变量则不需要
+				op = "<option value=" +i + ">" + data[i] + "</option>"
+				//对 select id='province' 标签进行追加
+				$('#province').append(op);
+			})
+			}
+	
+		function BindCity(data){
+			data = $.parseJSON(data)
+			$.each(data,function(i){
+				//console.log(i)
+				op = "<option value=" +i + ">" + data[i] + "</option>"
+				$('#city').append(op);
+			})
+			}
+		
+		function BindCounty(data){
+			data = $.parseJSON(data)
+			$.each(data,function(i){
+				//console.log(i)
+				op = "<option value=" +i + ">" + data[i] + "</option>"
+				$('#county').append(op);
+			})
+			}
+	</script>
+</body>
+
+</html>

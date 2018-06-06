@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+	<title>世界，你好</title>
+</head>
+
+
+<body>
+	<!--第一种模板语言 -->
+	<h1>Hi, {{key1}},{{key2}}</h1>
+	
+	<!--第二种模板语言 -->
+	{% if not key3 %}
+		<h1>Key3 value,{{key3}}</h1>
+	{% else %}
+		<h1>Else data</h1>
+	{% endif %}
+	
+	<hr>
+	
+	<!--第三种模板语言 -->
+	{% ifequal key3 'OK' %}
+		<h1>OK</h1>
+	{% else %}
+		<h1>Bad<h1>
+	{%endifequal%}
+	
+	<hr>
+	
+	<!--第四种模板语言 -->
+	<table border=1>
+		{% for item in names %}   
+			<tr><td>{{item}}</td><td>{{item}}</td><td>{{item}}</td><td>{{item}}</td></tr>
+		{% endfor %}
+	</table>
+	
+</body>
+
+</html>

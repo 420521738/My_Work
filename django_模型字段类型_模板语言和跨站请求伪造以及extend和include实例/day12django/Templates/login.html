@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv=Content-Type content="text/html;charset=utf-8">
+	<title>登录世界，你好</title>
+</head>
+
+
+<body>
+	<div>
+		<fieldset>
+			<legend>登录</legend>
+			<form id='form' method='post' action='/login/'>
+				{% csrf_token %}
+				<p>
+					<label for='user'>用户名：</label>
+					<input type='text' id='user' name='username' />
+				</p>
+				<p>
+					<label for='pwd'>密码：</label>
+					<input type='password' id='pwd' name='password' />
+				</p>
+				<p><label>&nbsp;</label><input type='submit' value='提交' /><span>{{ LoginStatus }}</span></p>
+			</form> 
+		</fieldset>
+	</div>
+	
+</body>
+
+</html>
