@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta http-equiv=Content-Type content="text/html;charset=utf-8" />
+	<title>运维便捷执行系统</title>
+	<!-- 先引用外界的css文件，在settings.py文件中已经定义了静态文件路径 -->
+	<link rel="stylesheet" href='/static/css/common.css' />
+	{% block css %} {% endblock %}
+</head>
+
+<body>
+	<div class='pg-title'>
+		<ul>
+			<li>
+				<a>首页</a>
+			</li>
+		</ul>
+	</div>
+	
+	<div class='pg-body'>
+		<div class='body-menu'>
+			<div>
+				<div class="menu-title">用户管理</div>
+				<div class="menu-body">
+					<a href="/admin/userlist">用户编辑和添加</a>
+					<a href="">增加用户</a>
+					<a href="">删除用户</a>
+				</div>
+			</div>
+			
+			<div>
+				<div class="menu-title">主机管理</div>
+				<div class="menu-body hide">
+					<a href="">主机列表</a>
+					<a href="">增加主机</a>
+					<a href="">删除主机</a>
+				</div>
+			</div>
+
+			<div>
+				<div class="menu-title">资产管理</div>
+				<div class="menu-body hide">
+					<a href="">资产列表</a>
+					<a href="">添加资产</a>
+					<a href="">导出资产列表</a>
+				</div>
+			</div>
+			
+			<div>
+				<div class="menu-title">命令拦截</div>
+				<div class="menu-body hide">
+					<a href="">命令黑名单</a>
+					<a href="">拦截记录</a>
+				</div>
+			</div>
+			
+		</div>
+	
+		<div class='body-content'>
+			{% block content %} {% endblock %}
+		</div>
+	</div>
+	
+	<!-- 调用外界的js，以及自己的js -->
+	<!-- <script type="text/javascript" src='/static/js/jquery-1.8.2.js' ></script> -->
+	<script type="text/javascript" src='/static/js/jquery-1.9.1.js' ></script>
+	{% block javascript %} {% endblock %}
+	<script type="text/javascript">
+		$(function(){
+			$('.menu-title').click(function(){
+				$(this).parent().siblings().children('.menu-body').addClass('hide');
+				$(this).next().removeClass('hide');
+			});
+		});
+	</script>	
+	
+</body>
+
+</html>

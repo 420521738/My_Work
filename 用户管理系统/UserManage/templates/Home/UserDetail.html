@@ -1,0 +1,24 @@
+{% extends 'Layout/Master.html' %}
+
+{% block content %}
+	<p>用户名：{{key1.UserName}}</p>
+	<p>姓名：{{key1.RealName}}</p>
+	<p>性别：
+		{% ifequal key1.Gender 1 %}
+			男
+		{% else %}
+			{% ifequal key.Gender 0 %}
+				女
+			{% else %}
+				null
+			{% endifequal %}
+		{% endifequal %}
+	</p>
+	<p>密码：{{key1.PassWord}}</p>
+	<p>邮箱：{{key1.Email}}</p>
+{% endblock %}
+
+
+
+
+

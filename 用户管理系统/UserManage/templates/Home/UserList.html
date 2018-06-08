@@ -1,0 +1,191 @@
+{% extends 'Layout/Master.html' %}
+
+{% block css %}
+	<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css" />
+{% endblock %}
+
+{% block content %}
+<div>
+	<input type='button' value='添加用户' onclick='AddItem();' />
+</div>
+
+<table style='1'>
+	<tr>
+		<td>用户名</td>
+		<td>姓名</td>
+		<td>性别</td>
+		<td>密码</td>
+		<td>邮箱</td>
+		<td>操作</td>
+	</tr>
+	
+	{% for item in model %}
+		<tr>
+			<td class='hide'>{{item.Nid}}</td>
+			<td><a href='/admin/userdetail/{{item.Nid}}'>{{item.UserName}}</a></td>
+			<td>{{item.RealName}}</td>
+			<td>
+				{% ifequal item.Gender 1 %}
+					男
+				{% else %}
+					{% ifequal item.Gender 0 %}
+						女
+					{% else %}
+						null
+					{% endifequal %}
+				{% endifequal %}
+			</td>
+			<td>{{item.PassWord}}</td>
+			<td>{{item.Email}}</td>
+			<td>
+				<a onclick='EditItem(this);'class='label label-success'>编辑</a>
+				<a onclick='DeleteItem(this);'class='label label-success'>删除</a>
+			</td>
+		</tr>		
+	{% endfor %}
+</table>
+
+<ul class="pagination">
+    <li><a href="#">&laquo;</a></li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+</ul>
+<ul class="pagination">
+	{{page}}
+</ul>
+
+<!-- 添加层开始 -->
+<div id='wpq-modal' class='wpq-modal hide'>
+	<div class='cancle' onclick='CancleShade();'>x</div>
+	<div class='title'>提示</div>
+	<form id='form' class='form' method='post' action='/admin/adduser/'>
+		{% csrf_token %}
+		<div>
+			<input type='hidden' id='nid' name='nid' />
+			<p>
+				<label for='user'>用户名：</label>
+				<input type='text' id='user' name='username' />
+			</p>
+			<p>
+				<label for='name'>姓名：</label>
+				<input type='text' id='name' name='name' />
+			</p>
+			<!-- 
+			<p>
+				<label for='gender'>性别：</label>
+				<span id='gender'>
+					女<input type='radio' name='gender' value='0' text='女' />
+					男<input type='radio' name='gender' value='1' text='男' />
+				</span>
+			</p>
+			-->
+			<p>
+				<label for='gender2'>性别：</label>
+				<select id='gender2' name='gender2'>
+					<option value='0' text='女'>女</option>
+					<option value='1' text='男'>男</option>
+				</select>
+			</p>
+			<p>
+				<label for='pwd'>密码：</label>
+				<input type='password' id='pwd' name='password' />
+			</p>
+			<p>
+				<label for='email'>邮箱：</label>
+				<input type='text' id='email' name='email' />
+			</p>
+		</div>
+		<div class='buttom'>
+			<input type='submit' value='确定' />
+			<input type='button' value='关闭' onclick='CancleShade();' />
+		</div>
+	</form>	
+</div>
+<!-- 添加层结束 -->
+
+
+<!-- 删除层开始-->
+<div id='wpq-modal-del' class='wpq-modal hide'>
+	<div class='cancle' onclick='CancleShade();'>x</div>
+	<div class='title'>提示</div>
+	<form id='form1' class='form' method='post' action='/admin/deluser/'>
+		{% csrf_token %}
+		<div>
+			<input type='hidden' id='delnid' name='delnid' />
+			确定要删除该用户吗？
+		</div>		
+		<div class='bottom'>
+			<input type='submit' value='确定' />
+			<input type='button' value='关闭' onclick='CancleShade();' />
+		</div>
+	</form>
+</div>
+<!-- 删除层结束-->
+
+
+<!-- 遮罩层开始-->
+<div id='shade' class='shade hide'></div>
+<!-- 遮罩层结束-->
+{% endblock %}
+
+
+{% block javascript %}
+	<script type="text/javascript" src='/static/js/myself.js'></script>
+	<script type="text/javascript" src='/static/bootstrap/js/bootstrap.js'></script>
+	<script type="text/javascript">
+	
+		$(function(){
+			$.validate('#form');
+		})
+		
+		function AddItem(){
+			$('#form :text').val(null);
+			$('#wpq-modal,#shade').removeClass('hide');
+		}
+		
+		function CancleShade(){
+			$('#wpq-modal,#wpq-modal-del,#shade').addClass('hide');
+		}
+		
+		function EditItem(arg){
+			var data = []
+			var others = $(arg).parent().prevAll();
+			$.each(others,function(i,value){
+				data.push($(value).text());
+			})
+			data = data.reverse()
+			$('#nid').val(data[0]);
+			$('#user').val(data[1]);
+			$('#name').val(data[2]);
+			$("#gender2 option[text='" + data[3].trim() +"']").attr("selected",true);
+			$('#pwd').val(data[4]);
+			$('#email').val(data[5]);
+			$('#wpq-modal,#shade').removeClass('hide');
+		}
+		
+		function DeleteItem(arg){
+			var data = []
+			var others = $(arg).parent().prevAll();
+			$.each(others,function(i,value){
+				data.push($(value).text());
+			})
+			data = data.reverse()
+			$('#delnid').val(data[0]);
+			//alert($('#delnid').val());
+			$('#wpq-modal-del,#shade').removeClass('hide');
+		}
+	</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+

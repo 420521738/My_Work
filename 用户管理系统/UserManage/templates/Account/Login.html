@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+	<title>登录</title>
+	<!-- 先引用外界的css文件，在settings.py文件中已经定义了静态文件路径 -->
+	<link rel="stylesheet" href='/static/css/common.css' />
+</head>
+
+<body>
+	<div class='login'>
+		<!-- fieldset类似于一个框，表单周围的边框 -->
+		<fieldset>
+			<!-- fieldset上的注明信息 -->
+			<legend>登录</legend>
+			<!-- 需要往后台提交数据，就必须要有form表单，定义id以及方法为post，当提交表单时，表单数据会提交到url：/admin/login/ -->
+			<form id='form' method='post' action='/admin/login/'>
+				<!-- 这个是这个是防止跨站请求伪造而写的，在后台的处理程序AccountView中也有对应的写法 -->
+				{% csrf_token %}
+				<p>
+					<label class='label' for='user'>用户名：</label>
+					<input type='text' id='user' name='username' />
+				</p>
+				<p>
+					<label class='label' for='pwd'>&nbsp;&nbsp;&nbsp;密码：</label>
+					<input type='password' id='pwd' name='password' />
+				</p>
+				<p>
+					<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<input type='submit' value='提交' />
+					<span class='wrong'>&nbsp;&nbsp;{{ LoginStatus }}</span>
+				</p>
+			</form>
+		</fieldset>	
+	</div>
+	
+	<!-- 调用外界的js，以及自己的js -->
+	<script src='/static/js/jquery-1.8.2.js' ></script>
+	<script src='/static/js/myself.js' ></script>
+	<script>
+		//定义函数，为函数传参数#form，针对form表单起作用的函数
+		$(function(){
+			$.validate('#form');
+		})
+	</script>
+	
+</body>
+
+</html>
