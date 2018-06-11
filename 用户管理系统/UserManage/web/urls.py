@@ -15,10 +15,16 @@ urlpatterns = patterns('',
     #url(r'^admin/', include(admin.site.urls)),
     
     # 以下这些url规则都是带了前缀/admin/进来的，所以在访问的时候一定要先加上 /admin/
+    # 用户登录页
     url(r'^login/', AccountView.Login),
+    # 用户登录后的首页
     url(r'^index/', HomeView.Index),
+    # 用户列表页
     url(r'^userlist/$', HomeView.UserList),
+    # 用户详情页
     url(r'^userdetail/(?P<id>\d*)/$', HomeView.UserDetail),
+    # 增加用户页
     url(r'^adduser/', HomeView.AddUser),
+    # 删除用户页
     url(r'^deluser/', HomeView.DelUser),
 )

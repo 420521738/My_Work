@@ -6,6 +6,7 @@
 
 {% block content %}
 <div>
+	<!-- 添加“添加用户”按钮，点击这个按钮就出发函数AddItem() -->
 	<input type='button' value='添加用户' onclick='AddItem();' />
 </div>
 
@@ -19,12 +20,16 @@
 		<td>操作</td>
 	</tr>
 	
+	<!-- 开始使用模板语言中的for循环 -->
 	{% for item in model %}
 		<tr>
+			<!-- 第一列为隐藏列，在web上是不显示的，但是实际上是存在的，这个就是主键Nid，用来标识用户的 -->
 			<td class='hide'>{{item.Nid}}</td>
+			<!-- 第二列为用户名，做了链接跳转，跳转到url:/admin/userdetail/{{item.Nid}}，也就是用户详细页,去urls中找对应关系 -->
 			<td><a href='/admin/userdetail/{{item.Nid}}'>{{item.UserName}}</a></td>
 			<td>{{item.RealName}}</td>
 			<td>
+				<!-- 性别使用的是0,1表示，所以需要进行判断，这个是模板语言中的if判断 -->
 				{% ifequal item.Gender 1 %}
 					男
 				{% else %}
@@ -32,19 +37,26 @@
 						女
 					{% else %}
 						null
+					<!-- 结束模板语言中的ifequal循环时，需要加上ifequal -->
 					{% endifequal %}
 				{% endifequal %}
 			</td>
 			<td>{{item.PassWord}}</td>
 			<td>{{item.Email}}</td>
 			<td>
+				<!-- 在用户列表中展示了个人简要信息后，在最后增加了2个按钮，一个编辑用户按钮，一个是删除用户按钮 -->
+				<!-- 编辑用户按钮，按下这个按钮就触发EditItem(this);函数 -->
 				<a onclick='EditItem(this);'class='label label-success'>编辑</a>
+				<!-- 删除用户按钮，按下这个按钮就触发DeleteItem(this);函数 -->
 				<a onclick='DeleteItem(this);'class='label label-success'>删除</a>
 			</td>
-		</tr>		
+		</tr>
+	<!-- 结束模板语言中的for循环时，需要加上enfor -->		
 	{% endfor %}
 </table>
 
+<!-- 这里是分页展示的第一种方式，调用样式厂商bootstrap的样式即可，厂商网站：https://v3.bootcss.com/getting-started/#download -->
+<!-- 这里的class选择pagination是因为官方文档中给出示例，只要调用这个样式，就可以有怎样的分页效果 -->
 <ul class="pagination">
     <li><a href="#">&laquo;</a></li>
     <li><a href="#">1</a></li>
@@ -54,17 +66,23 @@
     <li><a href="#">5</a></li>
     <li><a href="#">&raquo;</a></li>
 </ul>
+<!-- 这里是自己写的分页效果展示调用，再加上bootstrap的pagination样式展示的效果 -->
 <ul class="pagination">
 	{{page}}
 </ul>
 
-<!-- 添加层开始 -->
+<!-- 用户添加层开始 -->
+<!-- 用户添加层实际上为form表单，外加一个div框，默认该添加层是隐藏的hide -->
 <div id='wpq-modal' class='wpq-modal hide'>
+	<!-- 为这个div框的右上角添加一个关闭的按钮，显示为x，点击x的时候触发CancleShade()函数 -->
 	<div class='cancle' onclick='CancleShade();'>x</div>
 	<div class='title'>提示</div>
+	<!-- 定义form表单，提交数据的方式为post，数据提交到url：/admin/adduser/ -->
 	<form id='form' class='form' method='post' action='/admin/adduser/'>
+		<!-- 防跨站请求伪造所需要加的这段 -->
 		{% csrf_token %}
 		<div>
+			<!-- form表单第一行是隐藏行，但是实际上是存在的，是用户的Nid，用于标识唯一用户 -->
 			<input type='hidden' id='nid' name='nid' />
 			<p>
 				<label for='user'>用户名：</label>
@@ -74,7 +92,7 @@
 				<label for='name'>姓名：</label>
 				<input type='text' id='name' name='name' />
 			</p>
-			<!-- 
+			<!-- 这是其中一种使用radio方式来选择性别，可以使用这样的方式，也就是圆圈里面选择之后有点的那种
 			<p>
 				<label for='gender'>性别：</label>
 				<span id='gender'>
@@ -83,6 +101,7 @@
 				</span>
 			</p>
 			-->
+			<!-- 这是另一种使用下拉选择框来选择性别的方式 -->
 			<p>
 				<label for='gender2'>性别：</label>
 				<select id='gender2' name='gender2'>
@@ -99,35 +118,44 @@
 				<input type='text' id='email' name='email' />
 			</p>
 		</div>
+		<!-- 在form表单最下面，还需要有两个按钮，一个是提交按钮，一个是取消按钮 -->
 		<div class='buttom'>
+			<!-- 提交按钮，类型是submit，将数据提交到url：/admin/adduser/ -->
 			<input type='submit' value='确定' />
+			<!-- 关闭按钮，类型是button，点击该按钮就触发CancleShade();函数 -->
 			<input type='button' value='关闭' onclick='CancleShade();' />
 		</div>
 	</form>	
 </div>
-<!-- 添加层结束 -->
+<!-- 用户添加层结束 -->
 
 
-<!-- 删除层开始-->
+<!-- 用户删除层开始-->
+<!-- 用户删除层实际上为form表单，外加一个div框，默认该删除层是隐藏的hide -->
 <div id='wpq-modal-del' class='wpq-modal hide'>
 	<div class='cancle' onclick='CancleShade();'>x</div>
 	<div class='title'>提示</div>
+	<!-- 定义form表单，提交数据的方式为post，数据提交到url：/admin/deluser/ -->
 	<form id='form1' class='form' method='post' action='/admin/deluser/'>
 		{% csrf_token %}
 		<div>
+			<!-- delnid其实就是用户的Nid，Nid的获取是通过js的方法DeleteItem(this)来获取的 -->
 			<input type='hidden' id='delnid' name='delnid' />
 			确定要删除该用户吗？
 		</div>		
 		<div class='bottom'>
+			<!-- 将获取到的用户Nid提交到url：/admin/deluser/ -->
 			<input type='submit' value='确定' />
 			<input type='button' value='关闭' onclick='CancleShade();' />
 		</div>
 	</form>
 </div>
-<!-- 删除层结束-->
+<!-- 用户删除层结束-->
 
 
 <!-- 遮罩层开始-->
+<!-- 所谓的遮罩层其实就是在添加和删除用户的时候，在添加层和删除层之下添加一个遮罩，让用户只能操作当前的添加或者删除操作 -->
+<!-- 遮罩层主要的class配置是z-index这个参数，最上面的层的z-index值越大 -->
 <div id='shade' class='shade hide'></div>
 <!-- 遮罩层结束-->
 {% endblock %}
@@ -137,26 +165,32 @@
 	<script type="text/javascript" src='/static/js/myself.js'></script>
 	<script type="text/javascript" src='/static/bootstrap/js/bootstrap.js'></script>
 	<script type="text/javascript">
-	
+		//这个默认自执行函数是自己写的myself.js中的，作用和登录的form表单一样，不允许空信息和空信息出现提示;以及输入合法提示OK
 		$(function(){
 			$.validate('#form');
 		})
 		
+		//这个函数是增加用户的函数
 		function AddItem(){
 			$('#form :text').val(null);
+			//添加用户的div和表单展示，并添加遮罩层
 			$('#wpq-modal,#shade').removeClass('hide');
 		}
 		
+		//这个是取消或者关闭按钮触发所需要的函数，就是将当前可能打开的增加用户层、删除用户层、遮罩层隐藏掉
 		function CancleShade(){
 			$('#wpq-modal,#wpq-modal-del,#shade').addClass('hide');
 		}
 		
+		//这个是编辑用户按钮触发的js函数
 		function EditItem(arg){
 			var data = []
+			//获取改行所有的数据，并push到空列表data中
 			var others = $(arg).parent().prevAll();
 			$.each(others,function(i,value){
 				data.push($(value).text());
 			})
+			//将data列表反序，因为上面是将改行数据依次push到data中，如果想符合改行的值顺序，则需要进行反序
 			data = data.reverse()
 			$('#nid').val(data[0]);
 			$('#user').val(data[1]);
@@ -164,18 +198,24 @@
 			$("#gender2 option[text='" + data[3].trim() +"']").attr("selected",true);
 			$('#pwd').val(data[4]);
 			$('#email').val(data[5]);
+			//获取完该行数据，并赋值后，就打开添加用户的那个div和表单，数据都已填充
 			$('#wpq-modal,#shade').removeClass('hide');
 		}
 		
+		//这个是删除用户按钮触发的函数
 		function DeleteItem(arg){
 			var data = []
+			//获取改行所有的数据，并push到空列表data中
 			var others = $(arg).parent().prevAll();
 			$.each(others,function(i,value){
 				data.push($(value).text());
 			})
+			//将data列表反序，因为上面是将改行数据依次push到data中，如果想符合改行的值顺序，则需要进行反序
 			data = data.reverse()
+			//为id为delnid的那个input赋值，delnid获取到的值就是用户的Nid
 			$('#delnid').val(data[0]);
 			//alert($('#delnid').val());
+			//将删除用户的div和form表单以及遮罩层进行展示
 			$('#wpq-modal-del,#shade').removeClass('hide');
 		}
 	</script>
