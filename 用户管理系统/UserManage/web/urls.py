@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     # 以下这些url规则都是带了前缀/admin/进来的，所以在访问的时候一定要先加上 /admin/
     # 用户登录页
     url(r'^login/', AccountView.Login),
+    # 使用django的form进行登录验证，登录页的另一种更快捷的写法，这种写法的效果和上面的这种login写法效果一样
+    url(r'^loginform/', AccountView.LoginByForm),
     # 用户登录后的首页
     url(r'^index/', HomeView.Index),
     # 用户列表页
