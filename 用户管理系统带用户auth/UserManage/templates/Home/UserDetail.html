@@ -1,0 +1,27 @@
+{% extends 'Layout/Master.html' %}
+
+{% block content %}
+	<!-- 后端传来的是key1，key1是这个Nid对应的用户的个人信息 -->
+	<p>用户名：{{key1.UserName}}</p>
+	<p>姓名：{{key1.RealName}}</p>
+	<!-- 性别使用的是0,1表示，所以需要进行判断，这个是模板语言中的if判断 -->
+	<p>性别：
+		{% ifequal key1.Gender 1 %}
+			男
+		{% else %}
+			{% ifequal key.Gender 0 %}
+				女
+			{% else %}
+				null
+			<!-- 结束模板语言中的ifequal循环时，需要加上ifequal -->
+			{% endifequal %}
+		{% endifequal %}
+	</p>
+	<p>密码：{{key1.PassWord}}</p>
+	<p>邮箱：{{key1.Email}}</p>
+{% endblock %}
+
+
+
+
+
