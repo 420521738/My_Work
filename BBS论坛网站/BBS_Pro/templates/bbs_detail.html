@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+{% load comments %}
+
+{% block page-content %}
+<div class="contents">
+	<h3>{{ bbs_obj.title }}</h3>
+	<br>
+	{{ bbs_obj.content|safe }}
+</div>
+
+<hr>
+
+<div>
+	{% get_comment_count for bbs_obj as comment_count %}
+	<span class="glyphicon glyphicon-comment"></span>
+	{{ comment_count }}
+</div>
+
+{% if user.is_authenticated %}
+	<form id='sub_comment' action="/sub_comment/" method="post">
+		{% csrf_token %}
+		<textarea cols=80 rows=3 name="comment_content"></textarea>
+		<input type="hidden" name="bbs_id" value="{{ bbs_obj.id }}" />
+		<br>
+		<input type="submit" value="添加评论 " id="id_submit" />
+		<hr>
+	</form>
+{% else %}
+	<p><a href='/login/'>登录</a>后才能发表评论</p>
+{% endif %}
+{% get_comment_list for bbs_obj as comment_list %}
+	{% for comment in comment_list reversed %}
+		{{ comment.submit_date }}
+		<br>
+		<span style='font-weight:bold'>{{ comment.user }}</span> :{{ comment.comment }}
+		<hr>
+	{% endfor %}
+
+<!-- {% render_comment_list for bbs_obj %} -->
+
+{% endblock %}
