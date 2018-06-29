@@ -35,7 +35,7 @@
 
     <div class="container">
 
-      <form class="form-signin" id='form' method='post' action='/acc_login/'>
+      <form class="form-signin" id='form' method='post' action='/acc_login/?next={{current_path}}'>
 		<!-- 这个是这个是防止跨站请求伪造而写的，在后台的处理程序AccountView中也有对应的写法 -->
 		{% csrf_token %}
         <h2 class="form-signin-heading">请登录</h2>

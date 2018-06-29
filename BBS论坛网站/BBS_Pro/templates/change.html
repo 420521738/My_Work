@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+
+{% block page-content %}
+<h1>Change Password</h1>
+<form method="post" enctype="multipart/form-data" >
+	{% csrf_token %}
+	{{uf.as_p}}
+	<input type="submit" value="修改密码"/>
+</form>
+{% endblock %}

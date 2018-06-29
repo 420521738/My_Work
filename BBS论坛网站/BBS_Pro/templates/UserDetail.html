@@ -1,0 +1,15 @@
+{% extends 'index.html' %}
+
+{% block page-content %}
+	<!-- 后端传来的是UserInfo，UserInfo是这个Nid对应的用户的个人信息 -->
+	<p>用户名：{{ UserInfo }}</p>
+	<p>个性签名：{{signature.signature}}</p>
+	<p>注册时间：{{UserInfo.date_joined}}</p>
+	<p>邮箱：{{UserInfo.email}}</p>
+	<div><a href='/changepass/'>修改密码</a></div>
+{% endblock %}
+
+
+
+
+

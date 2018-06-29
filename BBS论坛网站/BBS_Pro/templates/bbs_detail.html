@@ -26,7 +26,7 @@
 		<hr>
 	</form>
 {% else %}
-	<p><a href='/login/'>登录</a>后才能发表评论</p>
+	<p><a href='/login/?next={{ current_path }}'>登录</a>后才能发表评论</p>
 {% endif %}
 {% get_comment_list for bbs_obj as comment_list %}
 	{% for comment in comment_list reversed %}
