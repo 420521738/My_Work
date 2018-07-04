@@ -87,6 +87,7 @@ def regist_sub(request):
         return render_to_response('regist_pub.html',context_instance=RequestContext(request))
 
 # 用户中心页面
+@login_required
 def user(request):
     user = request.user
     #print user
@@ -98,18 +99,20 @@ def user(request):
     #print userinfo
     return render_to_response('UserDetail.html',{'UserInfo':userinfo,'user':request.user,'signature':signature})
 
+@login_required
 def article(request):
     user_id = request.user.id
     author_id = models.BBS_user.objects.get(user_id=user_id).id
     this_user_article = models.BBS.objects.filter(author__id=author_id)
     return render_to_response('myarticle.html',{'article_list':this_user_article,'user':request.user})
 
+@login_required
 def delarticle(request,delarticle_id):
     article_id = delarticle_id
     models.BBS.objects.filter(id=article_id).delete()
     return HttpResponse("删除成功!<a href='/myarticle/'>文章管理</a>")
     
-
+@login_required
 def change_pass(request):
     if request.method == 'POST':
         uf = ChangeForm(request.POST)
@@ -161,6 +164,7 @@ def bbs_detail(request,bbs_id):
     bbs_category = models.Category.objects.all()
     return render_to_response('bbs_detail.html',{'bbs_obj':bbs,'current_path':request.path,'user':request.user,'bbs_category':bbs_category,'cate_id':0},context_instance=RequestContext(request))
 
+@login_required
 def sub_comment(request):
     #print request.POST
     bbs_id = request.POST.get('bbs_id')
