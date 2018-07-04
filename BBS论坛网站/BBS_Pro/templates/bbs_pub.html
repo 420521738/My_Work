@@ -27,6 +27,15 @@
 	{% csrf_token %}
 	<p class='contents'>标题：<input type='text' name='title' size='60' /></p>
 	<p>概要：<input id='summary' type='text' name='summary' size='60' /></p>
+	<p>
+		<label for='category_id'>板块：</label>
+		<select id='category_id' name='category_id'>
+			<option value='1' text='社会'>社会</option>
+			<option value='2' text='科技'>科技</option>
+			<option value='3' text='娱乐'>娱乐</option>
+			<option value='4' text='体育'>体育</option>
+		</select>
+	</p>
 	<textarea name='content'></textarea>
 	<input type='submit' value='保存发布'/>
 </form>

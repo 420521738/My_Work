@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block page-content %}
+
+<form method='post' action='/regist_sub/'>
+   {% csrf_token %}
+   <p><span>用户名：&nbsp;&nbsp;&nbsp;<input type="text" name="username" id="username" /></span></p>
+   <p><span>密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password"  name="password" id="password" /></span></p>
+   <p><span>确认密码：<input type="password"  name="password2" id="password2" /></span></p>
+   <p><span>签&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<input type="text" name="signature" id="signature" size='60' /></span></p>
+   <p><input type="submit"  value="立即注册"></p>
+ </form>
+ 
+{% endblock %}

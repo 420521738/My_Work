@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+{% block page-content %}
+<div class="contents">
+	<h3>{{ user }} 欢迎您管理您已发布的文章！</h3>
+	<br>
+	<div class="contents">
+		{% for article in article_list %}
+			<span> <a href='/delete_ariticle/{{article.id}}'>删除&nbsp;|&nbsp;</a></span><a href="/detail/{{article.id}}">{{ article.title }}</a>
+			<br>
+			<hr>
+		{% endfor %}
+	</div>
+</div>
+
+{% endblock %}
