@@ -1,0 +1,30 @@
+{% extends 'master/layout.html' %}
+
+{% block css %}
+{% endblock %}
+
+
+{% block page-content %}
+    <div class="container">
+
+      <form class="form-signin" id='form' method='POST' action='/login/'>
+        <h2 class="form-signin-heading">Please Signin</h2>
+        <label for="username" class="sr-only">用户名</label>
+        <input id="username" class="form-control" placeholder="用户名" required="" autofocus="" type="text" name='username'>
+        <label for="password" class="sr-only">密码</label>
+        <input id="password" class="form-control" placeholder="密码" required="" type="password" name='password'>
+        <div class="checkbox">
+          <label>
+            <input value="remember-me" type="checkbox"> 记住我
+          </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <p style="color:red">{{login_error}}</p>
+      </form>
+
+    </div> <!-- /container -->
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}

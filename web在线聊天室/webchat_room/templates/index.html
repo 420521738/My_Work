@@ -1,0 +1,15 @@
+{% extends 'master/layout.html' %}
+
+{% block css %}
+{% endblock %}
+
+
+{% block page-content %}
+	{% for item in rooms %}
+		<a href="/room/{{item.id}}/">{{ item.name }}</a>
+	{% endfor %}
+{% endblock %}
+
+
+{% block js %}
+{% endblock %}
