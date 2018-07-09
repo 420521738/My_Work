@@ -1,10 +1,12 @@
 {% extends 'master/layout.html' %}
+<!--继承模板的标准语法 -->
 
 {% block css %}
 {% endblock %}
 
 
 {% block page-content %}
+	<!-- 模板语言 -->
 	{% for item in rooms %}
 		<a href="/room/{{item.id}}/">{{ item.name }}</a>
 	{% endfor %}

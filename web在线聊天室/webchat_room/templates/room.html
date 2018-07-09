@@ -2,27 +2,51 @@
 
 {% block css %}
 	<link href='/static/css/modal.css' rel='stylesheet' type='text/css' />
+	
+	<!-- 这部分是引用html在线编辑器kindeditor，开始 -->
+	<script charset="utf-8" src="/static/kindeditor/kindeditor-all.js"></script>
+	<script charset="utf-8" src="/static/kindeditor/lang/zh-CN.js"></script>
+	<script>
+	        KindEditor.ready(function(K) {
+	                window.editor = K.create('#message');
+	        });
+	</script>
+	<!-- 这部分是引用html在线编辑器kindeditor，结束 -->
 {% endblock %}
+
+<!-- 这部分是引用html在线编辑器kindeditor，开始 -->
+var options = {
+        cssPath : '/css/index.css',
+        filterMode : true
+};
+var editor = K.create('textarea[name="content"]', options);
+<!-- 这部分是引用html在线编辑器kindeditor，结束 -->
 
 
 {% block page-content %}
 
 		<div>
+			<!-- 这里是房间里的第一行，显示房间号，在右侧显示“退出房间”的按钮 -->
 			<p><span>您所在的房间号是：{{room_obj.name}}</span><input style="float:right;" type='button' onclick='fadeIn()' value='退出房间' /></p>
 			<div>
+				<h4>在线用户列表</h4>
 				<div style="float:left;width:200px;">
-					<ul>
-						<h4>在线用户列表</h4>
+					<!-- 在线用户列表这里加了1个id，用于后面使用js进行实时在线用户数据刷新 -->
+					<ul id='userlist'>
 						{% for item in member_list %}
 						<li>{{item.user.username}}</li>
 						{% endfor %}
 					</ul>
 				</div>
 				<div style="float:left;width:400px;">
-					<div id='chatpool' style="height:400px;width:400px;border:3px solid #ddd;overflow:auto;"></div>
+					<!-- overflow:auto;这个的作用是自动使用进度条 -->
+					<div id='chatpool' style="height:300px;width:700px;border:3px solid #ddd;overflow:auto;"></div>
 					<br><br>
 					<div>
-						<textarea id='message' style="width:350px;height:50px;"></textarea>
+						<!-- <textarea id='message' style="width:350px;height:50px;"></textarea> -->
+						<!-- 这是按kindeditor要求写的texterea小编辑框 -->
+						<textarea id="message" name="content" style="width:700px;height:200px;"></textarea>
+						<!-- 这个是提交按钮，点击发送则会触发js函数SendMsg() -->
 						<input type='button' onclick='SendMsg();' value='发送' />
 					</div>
 				</div>
@@ -30,7 +54,9 @@
 			</div>
 		</div>
 		
+		<!-- 对话层开始，主要是通过样式来实现的这个功能 -->
 		<div id='formTable' class='modal hide'>
+			<!-- 这里要注意，这个是一个for表单，是会将数据提交给/delroomuser/{{room_obj.id}}/这个url去处理，其实没数据，只是让django去处理/delroomuser/{{room_obj.id}}/这个请求 -->
 			<form id='form0' method='POST' action='/delroomuser/{{room_obj.id}}/'>
 				<div class='modal-header' style='height:40px'>
 					<div style='float:left'><h4>{{user.username}}大人,您确定要退出房间吗？</h4></div>
@@ -43,6 +69,7 @@
 				</div>
 				
 				<div class='modal-footer'>
+					<!-- 提交和取消都会把遮罩层以及隐蔽层hide隐藏起来 -->
 					<input type='submit' onclick='fadeOut()' class='btn btn-success' value='提交' />
 					<a onclick='fadeOut()' class='btn btn-success' data-dismiss='modal'>取消</a>
 					<!-- 
@@ -53,8 +80,11 @@
 				</div>
 			</form>
 		</div>
+		<!-- 对话层结束，主要是通过样式来实现的这个功能 -->
 		
+		<!-- 别忽略这个，遮罩层开始，这个是遮罩层 -->
 		<div id='shade' class='modal-background hide'></div>
+		<!-- 别忽略这个，遮罩层开始，这个是遮罩层 -->
 		
 {% endblock %}
 
@@ -87,45 +117,97 @@
 	      return fmt;   
 	    }  
 	
+		//这个是对话框显示，遮罩层打开
 		function fadeIn(){
 			document.getElementById('formTable').className='modal';
 			document.getElementById('shade').className='modal-background';
 			}
+		
+		//这个是对话框关闭，遮罩层关闭
 		function fadeOut(){
 			document.getElementById('formTable').className='modal hide';
 			document.getElementById('shade').className='modal-background hide';
 			}
+			
+		//这个是发消息到后台，后台保存的函数
 		function SendMsg(){
+			// 取得HTML内容，这个是kindeditor指定要写的
+			html = editor.html();
+			// 同步数据后可以直接取得textarea的value，这个是kindeditor指定要写的
+			editor.sync();
+			// 原生API，，这个是kindeditor指定要写的
+			msg = document.getElementById('message').value; 
+			//html = K('#message').val(); // KindEditor Node API
+			//html = $('#message').val(); // jQuery
+			
+			//这个是时间格式化函数取时间的格式，按你想要的方式取数据就行
 			var sendTime = new Date().Format("yyyy-MM-dd hh:mm:ss"); 
 			//alert(sendTime);
-			var msg = $('#message').val();
-			$('#message').val("");
-			var content = "<span>"+sendTime+"</span><br><span>"+msg+"</span><br>"
+			//var msg = $('#message').val();
+			//$('#message').val("");
+			
+			//获取到输入框里大的数据后，将输入框清空，这个是kindeditor指定要写的
+			editor.html('');
+			//这里要注意，不加引号的话，在调试过程中会出现编码错误
+			var name = '{{user.username}}';
+			var content = "<span>"+name+":"+sendTime+"</span><br><span>"+msg+"</span><br>"
 			$('#chatpool').append(content)
 			var height = document.getElementById("chatpool").scrollHeight;
 			$('#chatpool').scrollTop(height)
 			var id ={{user.id}}
 			var roomid = {{room_obj.id}}
-			var data = {id:id,roomid:roomid,msg:msg,sendtime:sendTime}
+			var data = {id:id,roomid:roomid,msg:msg,sendtime:sendTime,name:name}
+			//这里是使用ajax标准写法将data数据使用post方法传到后端的/savemsg/的url进行处理
 			syncrequest('/savemsg/',data,'post',null)
 			}
-
+		
+		//这是一个定时器任务，每2秒钟执行一次
 		setInterval(function(){
 			var roomid = {{room_obj.id}}
 			data = {roomid:roomid}
+			//每2秒钟执行一次ajax请求，使用get的方式，从后端取到的数据传入函数updatechatpool去执行
 			syncrequest('/getmsg/',data,'get',updatechatpool)
 		},2000);
 		
-		function updatechatpool(arg){
+		//这也是一个定时器任务，每2秒钟执行一次
+		setInterval(function(){
+			var roomid = {{room_obj.id}}
+			data = {roomid:roomid}
+			//每2秒钟执行一次ajax请求，使用get的方式，从后端取到的数据传入函数updateuserlist去执行
+			syncrequest('/getuserlist/',data,'get',updateuserlist)
+		},2000);
+		
+		//为了实现实时更新房间在线用户列表
+		function updateuserlist(arg){
+			//先对从后端取到的数据进行json反序列化
 			var arg = $.parseJSON(arg);
-			$("#chatpool").empty();
-			console.log(arg);
+			//member_list = arg;
+			//alert(member_list);
+			$("#userlist").empty();
 			$.each(arg,function(k,v){
-				var content = "<span>"+v[2]+"</span><br><span>"+v[1]+"</span><br>"
-				$("#chatpool").append(content);
+				var content = "<li>"+v+"</li>"
+				$("#userlist").append(content);
 			})
 		}
-			
+		
+		//更新当前房间聊天池内容的信息展示给各个该房间的用户
+		function updatechatpool(arg){
+			//先对从后端取到的数据进行json反序列化
+			var arg = $.parseJSON(arg);
+			//先将聊天池清空
+			$("#chatpool").empty();
+			//console.log(arg);
+			//使用each循环，将获取到的聊天池内容append到聊天池中
+			$.each(arg,function(k,v){
+				var content = "<span>"+v[3]+" :"+v[2]+"</span><br><span>"+v[1]+"</span><br>"
+				$("#chatpool").append(content);
+			})
+			//这个是控制聊天池的进度条,在进度条处的overflow:auto;就是起了自动使用进度条的功能,计算框的高度，然后显示最高
+			var height = document.getElementById("chatpool").scrollHeight;
+			$('#chatpool').scrollTop(height)
+		}
+		
+		//ajax数据请求的标准写法
 		function syncrequest(url,data,type,func){
 			$.ajax({
 				url:url,
@@ -135,6 +217,7 @@
 				})
 			}
 			
+		// 编辑器输入内容的时候，按下回车键就执行发送函数，也就是说按下回车就默认发表消息
 		$("#message").keyup(function(event){
 			if(event.keyCode == 13){
 				SendMsg();

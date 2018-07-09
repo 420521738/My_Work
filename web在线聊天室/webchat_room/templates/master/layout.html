@@ -12,6 +12,7 @@
 		<link href="/static/css/navbar-fixed-top.css" rel="stylesheet">
         <link href="/static/css/customize.css" rel="stylesheet">
 		<script src="/static/jquery-ui/js/jquery-ui-1.10.4.js"></script>
+		<!-- 标准写法，在head部写个模板 -->
      	{% block css %}
      	{% endblock %}
 	</head>
@@ -31,10 +32,14 @@
 	              <li class="active"><a href="#">Home</a></li>
 	              <li><a href="#about">About</a></li>
 	              <li><a href="#contact">Contact</a></li>
+	              
+	              <!-- 模板语言，使用django自带的user.is_authenticated来判断用户是否已经登录 -->
+	              <!-- 如果已经登录，则显示个人中心以及退出两个按钮 -->
 	              {% if user.is_authenticated %}
 	              	<li><a class="dropdown-toggle" href='/user/'>个人中心</a></li>
 	              	<li><a class="dropdown-toggle" href='/logout/'>退出</a></li>
 	              {% else %}
+	              <!-- 如果没有登录，则显示登录和免费注册两个按钮 -->
 	              	<li><a class="dropdown-toggle" href='/login/'>登录</a></li>
 	              	<li><a class="dropdown-toggle" href='/regist/'>免费注册</a></li>
 	              {% endif %}
@@ -46,6 +51,7 @@
 	    </div>
 	      
 	     <div id='page-content' class="container">
+	     	<!-- 标准写法，在body部写个模板 -->
 	     	{% block page-content %}
 	     	{% endblock %}  	
 	     </div> 
@@ -64,6 +70,7 @@
 	    <script src="/static/js/bootstrap-carousel.js"></script>
 	    <script src="/static/js/bootstrap-typeahead.js"></script>
 	    
+	    <!-- 标准写法，在底部写个模板 -->
 	 	{% block js %}
 	 	{% endblock %} 
 	
