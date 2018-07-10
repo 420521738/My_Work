@@ -1,0 +1,38 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<title>分页的世界</title>
+		
+		<!-- 以下是分页的样式，开始 -->
+		<style type="text/css">
+			body
+			{
+				font-size: .85em;
+				font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
+				color: #232323;
+				background-color:#fff;
+			}
+			#head .title{ height:80px; background-color:#444444; }
+			#Pageing A{ background-color:#008844;
+						border:1px solid White;
+						text-decoration:none; color:White;
+						padding: .1em .6em .2em .6em;}
+			#Pageing A.selected{ background-color:#AA7700; }
+		</style>
+		<!-- 以下是分页的样式，结束 -->
+	</head>
+	
+	<body>
+		<!-- 这里的id不能改，与上面的分页样式中的Padeing中的保持一致 -->
+		<div id='Pageing' style='margin:20px;'>
+			<pre style="color:red;">姓名&#9;&#9;&#9;邮箱&#9;&#9;&#9;电话号码</pre>
+			<!-- 模板语言，输出用户名、邮箱、电话号码 -->
+			{% for item in page_data %}
+				<pre>{{item.Name}}&#9;&nbsp;{{item.Email}}&#9;&#9;{{item.Phone}}</pre>
+			{% endfor %}
+			<!-- 这个page是分页实现的功能，这个page是pagerhelper里面处理后返回来的一堆a标签，使用了Padeing中的A标签属性 -->
+			{{page}}
+		</div>
+		
+	</body>
+</html>
