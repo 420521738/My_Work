@@ -1,0 +1,18 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>首页</title>
+</head>
+<body>
+	<div>你已登录</div>
+	<div>
+        {% if user.is_authenticated %}
+    		{{user.username}}
+    		<a href='/logout'>退出</a>
+    	{% else %}
+    		<a href="/login/">登录</a>
+    	{% endif %}
+	</div>
+	
+</body>
+</html>
