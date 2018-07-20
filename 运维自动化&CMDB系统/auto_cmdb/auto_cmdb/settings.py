@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+#coding:utf-8
+
 """
 Django settings for auto_cmdb project.
 
@@ -100,6 +103,9 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        # 这个是有权限控制调用的
+        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        # 这个是允许所有调用
+        'rest_framework.permissions.AllowAny'
     ]
 }

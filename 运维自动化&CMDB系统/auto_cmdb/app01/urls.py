@@ -19,4 +19,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     # 以/cmdb/进来的任何请求，都使用router.urls去解析，也就是上面的router.register里面的url
     url(r'^', include(router.urls)),
+    # 用户的增删改查
+    url(r'django_users/(\d*)$', views.DjangoUsers),
 )
