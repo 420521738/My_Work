@@ -45,6 +45,9 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'app01',
     'rest_framework',
+    'django_filters',
+    'daterange_filter',
+    'import_export',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -94,18 +97,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 STATICFILES_DIRS =(
     os.path.join(BASE_DIR,'static'),
 )
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
-        # 这个是有权限控制调用的
-        #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-        # 这个是允许所有调用
-        'rest_framework.permissions.AllowAny'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.AllowAny',),
+    
+    'PAGINATE_BY': 10
+}
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'app01.views.custom_exception_handler'
 }

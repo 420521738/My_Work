@@ -1,0 +1,58 @@
+a={"raid_type":"logicaldrive 1 (1.9 TB, RAID 5, OK)",
+"raid_adaptor":{"adaptor_0":{"model":"Smart Array P420i","sn":"001438031F5BEA0)","memory_size":0}},
+"certname":"linux1969.lq.autohome.cc",
+"ram_size":126,
+"nic_count":6,
+"cpu_count":"2",
+"model":"ProLiant DL360p Gen8",
+"nic":{"bond0":{"netmask":"","ipaddress":"","model":"","macaddress":"38:EA:A7:11:81:84","hardware":1,"network":""},
+"bond0_200": {"netmask":"255.255.224.0","ipaddress":"192.168.196.9","model":"","macaddress":"38:EA:A7:11:81:84","hardware":1,"network":"192.168.192.0"},
+"eth3":{"netmask":"","ipaddress":"","model":"","macaddress":"38:EA:A7:14:CB:E1","hardware":1,"network":""},
+"eth2":{"netmask":"","ipaddress":"","model":"","macaddress":"38:EA:A7:14:CB:E0","hardware":1,"network":""},
+"eth1":{"netmask":"","ipaddress":"","model": "","macaddress":"38:EA:A7:11:81:85","hardware":1,"network":""},
+"eth0":{"netmask":"","ipaddress":"","model":"","macaddress":"38:EA:A7:11:81:84","hardware":1,"network":""}},
+"sn":"6CU4360DRT", 
+"not_modify":0,
+"manufactory":"HP",
+"asset_id":"74",
+"ram":{"PROC  1 DIMM 12":{"model":"DDR3","sn":"Not Specified","capacity":16,"manufactory":"HP"},
+"PROC  1 DIMM 11":{"model":"DDR3","sn":"Not  Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  1 DIMM 10":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  1 DIMM  9":{"model":"DDR3","sn":"Not Specified", "capacity":16,"manufactory":"HP"},
+"PROC  1 DIMM  8":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  1 DIMM  7":{"model":"DDR3","sn":"Not Specified","capacity":0,    "manufactory":"UNKNOWN"},
+"PROC  1 DIMM  6":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  1 DIMM  5":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  1 DIMM  4":{"model":"DDR3","sn":"Not Specified","capacity":16,"manufactory":"HP"},
+"PROC  1 DIMM  3":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory": "UNKNOWN"},
+"PROC  1 DIMM  2":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  1 DIMM  1":{"model":"DDR3","sn":"Not Specified","capacity":16,"manufactory":"HP"},      
+"PROC  2 DIMM 12":{"model":"DDR3","sn":"Not Specified","capacity":16,"manufactory":"HP"},
+"PROC  2 DIMM 11":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM    10":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM  9":{"model":"DDR3","sn":"Not Specified","capacity":16,"manufactory":"HP"},
+"PROC  2 DIMM  8":{"model":   "DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM  7":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM  6":{"model":"DDR3","sn": "Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM  5":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM  4":{"model":"DDR3","sn":"Not         Specified","capacity":16,"manufactory":"HP"},
+"PROC  2 DIMM  3":{"model":"DDR3","sn":"Not Specified","capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM  2":{"model":"DDR3","sn":"Not Specified",  "capacity":0,"manufactory":"UNKNOWN"},
+"PROC  2 DIMM  1":{"model":"DDR3","sn":"Not Specified","capacity":16,"manufactory":"HP"}},
+"physical_disk_driver":[
+{"model":"","sn":"","size":"300","slot":"1I",  "iface_type":"SAS"},
+{"model":"","sn":"","size":"300","slot":"1I","iface_type":"SAS"},
+{"model":"","sn":"","size":"300","slot":"1I","iface_type":"SAS"},
+{"model":"","sn":"","size":"300","slot":"1I", "iface_type":"SAS"},
+{"model":"","sn":"","size":"300","slot":"2I","iface_type":"SAS"},
+{"model":"","sn":"","size":"300","slot":"2I","iface_type":"SAS"},
+{"model":"","sn":"","size":"300","slot":"2I",   "iface_type":"SAS"},
+{"model":"","sn":"","size":"300","slot":"2I","iface_type":"SAS"}]
+
+,"raid_adaptor_count":1,"cpu_model":"Intel(R) Xeon(R) CPU E5-2660 v2 @ 2.20GHz","cpu_core_count":"40"}
+
+
+import json
+
+
+print json.dumps(a)

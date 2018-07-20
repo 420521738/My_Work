@@ -1,0 +1,127 @@
+
+import json
+temp_asset = {
+ 'modify_notify': 0 , #0 = update, 1= no changes
+u'cpu_core_count': u'4',
+ u'cpu_count': u'1',
+ u'cpu_model': u'Intel(R) Core(TM) i7-4351U CPU @ 1.60GHz',
+ u'nic': {u'eth0': {u'ipaddress': u'10.0.2.15',
+                    u'macaddress': u'05:00:27:4F:B8:05',
+                    u'model': u'1',
+                    u'netmask': u'255.255.255.0',
+                    u'network': u'10.0.2.0'},
+          u'eth1': {u'ipaddress': u'172.28.128.41',
+                    u'macaddress': u'05:00:27:5B:D7:66',
+                    u'model': u'2',
+                    u'netmask': u'255.255.255.0',
+                    u'network': u'172.28.128.0'},
+          u'lo': {u'ipaddress': u'127.0.0.1',
+                  u'macaddress': u'05:00:27:5B:D7:67',
+                  u'model': u'3',
+                  u'netmask': u'255.0.0.0',
+                  u'network': u'127.0.0.0'}},
+ u'nic_count': 3,
+ u'physical_disk_driver': {u'sda': {u'capacity': 8364103,
+                                    u'iface_type': u'',
+                                    u'manufactory': u'ATA',
+                                    u'model': u'VBOX HARDDISK',
+                                    u'slot': u'1',
+                                    u'sn': u'345'},
+                           u'sdb': {u'capacity': 1251756,
+                                    u'iface_type': u'',
+                                    u'manufactory': u'ATA',
+                                    u'model': u'VBOX HARDDISK',
+                                    u'slot': u'2',
+                                    u'sn': u'343'}},
+ u'raid_type': u'3',
+ u'ram_size': 490,
+ u'ram_slot': u'',
+ u'ram':{
+        0: {'model': 'DDR3 800MHZ',
+                    'manufactory' : 'Samsang',
+                    'capacity': 960
+                    },
+        15: {'model': 'DDR2 900MHZ',
+            'manufactory' : 'JinShiDun',
+            'capacity': 8096
+            },
+        #16: {'model': 'DDR4 900MHZ',
+        #    'manufactory' : 'JinShiDun',
+        #    'capacity': 488
+        #    },
+    },
+ u'sn': u'3714811985X16',
+ u'asset_id':1}
+ 
+asset_new = {"raid_type":"",
+"cpu_model":"Intel(R) Xeon(R) CPU           L5520  @ 2.27GHz",
+"model":"PowerEdge R410",
+
+
+"physical_disk_driver":{
+    "sdb":{"model":"Virtual Floppy",
+           "iface_type":"",
+           "slot":"",
+           "capacity":0,
+           "sn":"",
+           "manufactory":"iDRAC"},
+    "sda":{"model":"PERC 6/i Adapter",
+           "iface_type":"",
+           "slot":"",
+           "capacity":144542168,
+           "sn":"",
+           "manufactory":"DELL"},
+    "sr1":{"model":"DVD-ROM DV28SV",
+           "iface_type":"",
+           "slot":"",
+           "capacity":1045512,
+           "sn":"",
+           "manufactory":"TEAC"},
+    "sr0":{"model":"Virtual CD",
+           "iface_type":"",
+           "slot":"",
+           "capacity":1045512,
+           "sn":"",
+           "manufactory":"iDRAC"}},
+"nic_count":2,
+"ram":{
+    "DIMM_B4":{"model":"DDR3",
+              "capacity":0,
+              "sn":"",
+              "manufactory":""},
+    "DIMM_B3":{"model":"DDR3",
+               "capacity":0,
+               "sn":"",
+               "manufactory":""},
+    "DIMM_B2":{"model":"DDR3",
+               "capacity":0,
+               "sn":"85FBCA95",
+               "manufactory":"00CE00B380CE"},
+    "DIMM_B1":{"model":"DDR3",
+              "capacity":0,
+              "sn":"85FBCA86",
+              "manufactory":"00CE00B380CE"},
+    "DIMM_A4":{"model":"DDR3","capacity":0,"sn":"","manufactory":""},
+    "DIMM_A3":{"model":"DDR3","capacity":0,"sn":"","manufactory":""},
+    "DIMM_A2":{"model":"DDR3","capacity":0,"sn":"85FBCA8F","manufactory":"00CE00B380CE"},
+    "DIMM_A1":{"model":"DDR3","capacity":0,"sn":"85FBCA96","manufactory":"00CE00B380CE"}},
+"nic":{
+    "em2":{"model":"","network":"","ipaddress":"","macaddress":"00:26:b9:5c:9f:b6","netmask":""},
+    "em1":{"model":"","network":"10.168.100.0","ipaddress":"10.168.100.238","macaddress":"00:26:b9:5c:9f:b5","netmask":"255.255.255.0"}},
+    
+    "asset_id":"6",
+    "raid_adaptor_count":"1",
+    "raid_adaptor":{
+        "adaptor_0":{"model":"PERC 6/i Adapter","memory_size":"256MB","sn":"1122334455667788"}},
+    
+    "cpu_count":"2",
+    "ram_size":7804,
+    "sn":"8T5VS2X",
+    "manufactory":"Dell Inc.",
+    "cpu_core_count":"16",
+    "not_modify":0}
+ 
+if __name__ == '__main__':
+    print json.dumps(asset_new)
+#def test_data():
+#    json.dumps(temp_asset)

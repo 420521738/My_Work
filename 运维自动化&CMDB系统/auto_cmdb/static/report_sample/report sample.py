@@ -1,0 +1,62 @@
+    
+    {
+"raid_adaptor_count":1,
+"nic_count":6,
+"cpu_model":"Intel(R) Xeon(R) CPU E5-2660 v2 @ 2.20GHz_",
+"cpu_core_count":"40",
+"asset_id":"57",
+"not_modify":0,
+"ram":{
+    "PROC  2 DIMM  9_v2":{"manufactory":"HP","sn":"Test","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM  8":{"manufactory":"company","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM  7":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":0,"model":"DDR3"},
+    "PROC  2 DIMM  6":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":0,"model":"DDR3"},
+    "PROC  2 DIMM  5":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM  4":{"manufactory":"HP","sn":"Test2","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM  3":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":0,"model":"DDR3"},
+    "PROC  2 DIMM  2":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM  1":{"manufactory":"HP","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM 12":{"manufactory":"HP","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM 11":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM 10":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":0,"model":"DDR3"},
+    "PROC  1 DIMM  9":{"manufactory":"HP","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM  8":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM  7":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":0,"model":"DDR3"},
+    "PROC  1 DIMM  6":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":0,"model":"DDR3"},
+    "PROC  1 DIMM  5":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM  4":{"manufactory":"HP","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM  3":{"manufactory":"UNKdd","sn":"Not Specified","capacity":0,"model":"DDR3"},
+    "PROC  1 DIMM  2":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  1 DIMM  1":{"manufactory":"HP","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM 12":{"manufactory":"HP","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM 11":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":16,"model":"DDR3"},
+    "PROC  2 DIMM 10":{"manufactory":"UNKNOWN","sn":"Not Specified","capacity":0,"model":"DDR3"}
+    },
+"raid_type":"logicaldrive 1 (1.9 TB, RAID 5, OK)?",
+"nic":{
+    "_200":{"macaddress":"38:EA:A7:11:8A:FC","ipaddress":"192.168.196.3","hardware":1,"netmask":"255.255.224.0","model":"","network":"192.168.192.0"},
+    "alex":{"macaddress":"38:EA:A7:11:8A:FC","ipaddress":"","hardware":1,"netmask":"","model":"","network":""},
+    "eth3":{"macaddress":"38:EA:A7:14:CC:89","ipaddress":"0.0.0.0","hardware":1,"netmask":"","model":"","network":""},
+    "eth2":{"macaddress":"38:EA:A7:14:CC:88","ipaddress":"","hardware":1,"netmask":"","model":"","network":""},
+    "eth1":{"macaddress":"38:EA:A7:11:8A:FD","ipaddress":"","hardware":1,"netmask":"24","model":"","network":""},
+    "eth0":{"macaddress":"38:EA:A7:11:8A:FC_v2","ipaddress":"","hardware":1,"netmask":"27","model":"","network":"28"}
+    },
+"manufactory":"HP",
+"sn":"6CU4360DR5_",
+"cpu_count":"2",
+"raid_adaptor":{
+    "adaptor_0":{"memory_size":0,"sn":"001438031F5BDD0)","model":"Smart Array P420i"}
+    },
+"certname":"linux1963.lq.autohome.cc",
+"ram_size":256,
+"physical_disk_driver":[
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"1I:1:1","model":"Again"},
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"1I:1:2","model":"be polite"},
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"1I:1:3","model":"hey"},
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"1I:1:4","model":""},
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"2I:1:5","model":""},
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"2I:1:6","model":""},
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"2I:1:7","model":""},
+    {"iface_type":"SAS","sn":"","capacity":300,"slot":"2I:1:8","model":""}
+    ],
+"model":"ProLiant DL360p Gen8"}
