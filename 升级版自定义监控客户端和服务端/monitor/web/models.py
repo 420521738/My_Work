@@ -1,7 +1,4 @@
 #_*_coding:utf-8_*_
-import sys
-reload(sys) 
-sys.setdefaultencoding("utf-8") 
 from django.db import models
 
 from django.contrib.auth.models import User

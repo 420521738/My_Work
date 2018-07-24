@@ -11,8 +11,7 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
     url(r'^', include(router.urls)),
     (r'monitor_data/$', views.monitor_data),
-    (r'graph_data/$', views.graph_data)
-    
+    (r'graph_data/$', views.graph_data),
 )
 
 
