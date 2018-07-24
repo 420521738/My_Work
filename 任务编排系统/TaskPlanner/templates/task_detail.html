@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block page-content   %}
+<style type="text/css">
+
+
+.task {width:150px;
+       height:100px;
+       float:left;
+       margin:15px;}
+.task p{font-size:18px}
+.task span{
+    font-size:40px     
+    }
+    
+.task_progress{
+    margin:15px;
+    }
+.clearfix:after {
+     content: ".";
+     display: block;
+     height: 0;
+     clear: both;
+     visibility: hidden;
+}
+
+</style>
+
+<h1 class="page-header">Task Detail</h1>
+
+<div class="row placeholders">
+    <div class="progress task_progress">
+      <div id='task_progress' class="progress-bar progress-bar-success" role="progressbar"  style="width: 50%">
+        
+        40%
+      </div>
+    </div>
+    <div class='color-swatches clearfix'>
+        <div class='task bg-info'> 
+            <p>总任务数</p>
+             <span id='total_task'>loading...</span>
+        </div>
+        <div class='task bg-success'> 
+            <p>已成功</p>
+             <span id='success_num'>loading...</span>
+        </div>
+        <div class='task bg-danger'> 
+            <p>已失败</p>
+             <span id='failure_num'>loading...</span>
+        </div>
+
+
+    </div>
+    
+    <h3>任务日志</h3>
+    <hr>
+    
+</div>
+<span id='collapse_button' class="glyphicon glyphicon-plus" aria-hidden="true">收缩/展开</span>
+<div id='task_log'>
+
+</div>
+
+<script>
+function collapse_next(arg){
+    $(arg).next().toggle();
+    console.log("===>" + arg);
+}
+function get_task_log(refreshObj){
+   $.getJSON('/task/task_logs/{{task_id}}/',function(log_data){
+     console.log(log_data);
+     $("#task_log").empty();
+    $("#failure_num").text(log_data.failure_count);
+    $("#success_num").text(log_data.success_count);
+    $("#total_task").text(log_data.total_task);
+    var progress = (log_data.failure_count + log_data.success_count)/ log_data.total_task * 100;
+    console.log(progress);
+    $("#task_progress").css('width',progress + '%');
+    $("#task_progress").text(progress+'%');
+    
+    for (log in log_data.log_list){
+        console.log(log_data.log_list[log]); 
+        var record= log_data.log_list[log];  
+        host_record = "<p onclick='collapse_next(this)'>"+ record.host + ' -------- ' + record.ip + ' ---------- ' + record.result + ' --------- ' + record.date + "</p>";
+        log_html = "<pre>" + record.log + "</pre>";
+        $("#task_log").append(host_record);
+        $("#task_log").append(log_html);
+    } 
+
+       if  (progress == 100){
+            clearInterval(refreshObj);
+            cosonle.log('job is done...')
+        } //end if 
+   }); //end getJSON
+   
+
+} //end get task_log    
+$(document).ready(function(){
+    
+    $("#collapse_button").click(function(){
+        $("#task_log pre").slideToggle();
+    });
+
+    
+    var refreshLog = setInterval(function(){
+        get_task_log(refreshLog);
+        
+            
+        
+    },2000);
+    
+    
+});
+
+</script>
+
+
+{% endblock %}

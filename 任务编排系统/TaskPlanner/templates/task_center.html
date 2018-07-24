@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+
+{%block page-content %}
+
+          <h1 class="page-header">Task Center</h1>
+
+          <div class="row placeholders">
+
+            
+            <div class="col-xs-6 col-sm-6 placeholder">
+                <form class="form-horizontal" method="POST" action="/new_task/">
+                      <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">任务名称</label>
+                        
+                        <div class="col-sm-10">
+                          
+                          {{form.name}}
+                           <span style="color:red">{{form.name.errors}}</span> 
+                        </div>
+                       
+                      </div>
+                      <div class="form-group">
+                        <label  class="col-sm-2 control-label">描述</label>
+                        <div class="col-sm-10">
+                        {{form.description}}
+                        {{form.description.errors}}
+                        </div>
+                      
+                      </div>  
+                      <div class="form-group">
+                        <label name="task_type"  class="col-sm-2 control-label">任务类型</label>
+                        
+                        <div class="col-sm-10">
+                            {{form.task_type}}
+                            <span style="color:red">{{form.task_type.errors}}</span>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label">内容</label>
+                        <div class="col-sm-10">
+                          {{form.content}}
+                          <span style="color:red">{{form.content.errors}}</span>
+                        </div>
+                      </div>                      
+                      <div class="form-group">
+                        <label class="col-sm-2 control-label">选择任务主机</label>
+                        <div class="col-sm-10">
+                            {{form.hosts}}
+                            <span style="color:red">{{form.hosts.errors}}</span>
+                        </div>
+                      </div>  
+                      <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">选择主机组</label>
+                        <div class="col-sm-10">
+                            {{form.groups}}
+                          <span style="color:red">{{form.groups.errors}}</span>  
+                       </div>
+                       
+                       
+                       
+                      </div> 
+                      <div class="form-group">
+                        <label  class="col-sm-2 control-label">执行时间</label>
+                        <div class="col-sm-10">
+                          
+                           <input class="form-control" type="text" name="kick_off_at" id="datepicker" placeholder="不指定的时间的话，即代表立刻执行">
+                        </div>
+                      </div>                        
+                      <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                          <button type="submit" class="btn btn-success">Create Task</button>
+                        </div>
+                      </div>
+                </form>
+            </div>            
+            
+            <div class="col-xs-6 col-sm-3 placeholder">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="200x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iIzBEOEZEQiIvPjxnPjx0ZXh0IHg9IjcyLjc3MzQzNzUiIHk9IjEwMCIgc3R5bGU9ImZpbGw6I0ZGRkZGRjtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMHB0O2RvbWluYW50LWJhc2VsaW5lOmNlbnRyYWwiPjIwMHgyMDA8L3RleHQ+PC9nPjwvc3ZnPg==" data-holder-rendered="true">
+              <h4>Label</h4>
+              <span class="text-muted">Something else</span>
+            </div>
+
+          </div>
+
+          <h2 class="sub-header">任务列表</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>任务ID</th>
+                  <th>任务名称</th>
+                  <th>任务描述</th>
+                  <th>任务类型</th>
+                  <th>任务内容</th>
+                  <th>创建人</th>
+                  <th>执行时间</th>
+                  <th>执行主机数</th>
+                  <th>已成功数量</th>
+                  <th>已失败数量</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                {% for task in task_list  reversed%}
+                 <tr>
+                  <td><a href='/task/detail/{{task.id}}' target='blank'>{{task.id}}</a></td>
+                  <td>{{task.name}}</td>
+                  <td>{{task.description}}</td>
+                  <td>{{task.type}}</td>
+                  <td>{{task.content}}</td>
+                  <td>{{task.created_by}}</td>
+                  <td>{{task.kick_off_at}}</td>
+                  <td>{{task.total_tasks}}</td>
+                  <td class='success'>{{task.success}}</td>
+                  <td class='danger'>{{task.failure}}</td>
+
+                </tr>               
+                {%endfor%}
+              </tbody>
+            </table>
+
+          </div>
+          
+          
+
+ <script>
+
+    $( "#datepicker" ).datetimepicker({
+        inline: true
+    });
+</script>         
+          
+{% endblock%}
+
+
+<script>
+
+$( "#datepicker" ).datepicker({
+	inline: true
+});
+</script>
